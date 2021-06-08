@@ -19,7 +19,8 @@
 
   <ItemGroup>
     <Reference Include="Microsoft.Marketplace">
-      <HintPath>..\..\libs\Microsoft.Marketplace.dll</HintPath>
+      <!-- <HintPath>..\..\libs\Microsoft.Marketplace.dll</HintPath> -->
+      <HintPath>..\..\Submodules\commercial-marketplace-client-dotnet\src\bin\Release\net5.0\Microsoft.Marketplace.dll</HintPath>
     </Reference>
   </ItemGroup>
 

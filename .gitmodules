@@ -1,0 +1,3 @@
+[submodule "Submodules/commercial-marketplace-client-dotnet"]
+	path = Submodules/commercial-marketplace-client-dotnet
+	url = https://github.com/microsoft/commercial-marketplace-client-dotnet
