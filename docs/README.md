@@ -1,3 +1,5 @@
 # Docs
 
-Check out all these cool docs!
+## [Event Models](event-models.md)
+
+Learn about all of our cool event models so you can build your own integrtions.
