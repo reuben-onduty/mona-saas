@@ -58,7 +58,7 @@ Only Mona Administrators can access the admin center, setup wizard, and test end
 
 ## How do I manage Mona administrators?
 
-> Mona administrators must be __members__ of the Azure Active Directory (AAD) tenant used to set up your Mona deployment. [The subscription that Mona was deployed to also belongs to this Azure Active Directory tenant.](https://docs.microsoft.com/azure/active-directory/fundamentals/active-directory-how-to-find-tenant) Administrators [must be tenant __members__, not __guests__.](https://docs.microsoft.com/azure/active-directory/external-identities/user-properties#usertype)
+> Mona administrators must be __members__ of the Azure Active Directory (AAD) tenant used when setting up your Mona deployment. Administrators [must be tenant __members__, not __guests__](https://docs.microsoft.com/azure/active-directory/external-identities/user-properties#usertype).
 
 1. Navigate to the admin center (`/admin`).
 2. Open the __Mona SaaS configuration settings__ tab.
