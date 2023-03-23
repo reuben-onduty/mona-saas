@@ -17,6 +17,11 @@ namespace Mona.SaaS.Core.Models.Configuration
         [Required]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets/sets the Partner Center API base URL; useful in emulator scenarios.
+        /// </summary>
+        public string PartnerCenterApiBaseUrl { get; set; }
+
         public string EventVersion { get; set; } = EventVersions.V_2021_10_01;
 
         /// <summary>

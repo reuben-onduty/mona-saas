@@ -44,14 +44,14 @@ namespace Mona.SaaS.Services.Default
         public DefaultMarketplaceClient(
             ILogger<DefaultMarketplaceClient> logger,
             IOptionsSnapshot<IdentityConfiguration> identityConfig, 
-            IOptionsSnapshot<PublisherConfiguration> publisherConfig)
+            IOptionsSnapshot<DeploymentConfiguration> deploymentConfig)
         {
             this.logger = logger;
             this.identityConfig = identityConfig.Value;
             
-            pcApiBaseUrl = new Uri(string.IsNullOrEmpty(publisherConfig.Value.PartnerCenterApiBaseUrl)
+            pcApiBaseUrl = new Uri(string.IsNullOrEmpty(deploymentConfig.Value.PartnerCenterApiBaseUrl)
                 ? "https://marketplaceapi.microsoft.com"
-                : publisherConfig.Value.PartnerCenterApiBaseUrl);
+                : deploymentConfig.Value.PartnerCenterApiBaseUrl);
         }
 
         public async Task<bool> IsHealthyAsync()
