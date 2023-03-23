@@ -10,6 +10,8 @@ param aadTenantId string
 @secure()
 param aadClientSecret string
 
+param pcApiBaseUrl string = 'https://marketplaceapi.microsoft.com'
+
 // For subscribing to this Mona deployment's event grid topic...
 
 param eventGridConnectionName string = 'mona-events-connection-${deploymentName}'
@@ -223,7 +225,7 @@ resource workflow 'Microsoft.Logic/workflows@2019-05-01' = {
                   'content-type': 'application/json'
                 }
                 method: 'POST'
-                uri: 'https://marketplaceapi.microsoft.com/api/saas/subscriptions/@{body(\'${actionNames.parseSubscriptionInfo}\')?[\'Subscription ID\']}/activate?api-version=2018-08-31'
+                uri: uri(pcApiBaseUrl, 'api/saas/subscriptions/@{body(\'${actionNames.parseSubscriptionInfo}\')?[\'Subscription ID\']}/activate?api-version=2018-08-31')
               }
               runAfter: {}
               type: 'Http'

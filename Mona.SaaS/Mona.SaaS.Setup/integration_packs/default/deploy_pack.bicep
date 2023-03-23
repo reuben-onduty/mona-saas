@@ -10,6 +10,10 @@ param aadTenantId string
 @secure()
 param aadClientSecret string
 
+// To support Partner Center API emulators...
+
+param pcApiBaseUrl string = 'https://marketplaceapi.microsoft.com'
+
 // For subscribing to the event grid topic...
 
 param eventGridConnectionName string = 'mona-events-connection-${deploymentName}'
@@ -27,6 +31,7 @@ module onPurchased './on_purchased_workflow.bicep' = {
     aadClientId: aadClientId
     aadClientSecret: aadClientSecret
     aadTenantId: aadTenantId
+    pcApiBaseUrl: pcApiBaseUrl
   }
 }
 
@@ -50,6 +55,7 @@ module onPlanChanged './on_plan_changed_workflow.bicep' = {
     aadClientId: aadClientId
     aadClientSecret: aadClientSecret
     aadTenantId: aadTenantId
+    pcApiBaseUrl: pcApiBaseUrl
   }
 }
 
@@ -63,6 +69,7 @@ module onSeatQtyChanged './on_seat_qty_changed_workflow.bicep' = {
     aadClientId: aadClientId
     aadClientSecret: aadClientSecret
     aadTenantId: aadTenantId
+    pcApiBaseUrl: pcApiBaseUrl
   }
 }
 
@@ -76,6 +83,7 @@ module onReinstated './on_reinstated_workflow.bicep' = {
     aadClientId: aadClientId
     aadClientSecret: aadClientSecret
     aadTenantId: aadTenantId
+    pcApiBaseUrl: pcApiBaseUrl
   }
 }
 

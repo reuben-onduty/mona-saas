@@ -163,6 +163,7 @@ check_deployment_name() {
 event_version="2021-10-01" # Default event version is always the latest one. Can be overridden using [-e] flag below for backward compatibility.
 language="en" # Default UI language is English ("en"). Can be overridden using [-l] flag below.
 integration_pack="default"
+pc_api_base_url="https://marketplaceapi.microsoft.com"
 
 while getopts "a:d:g:l:n:r:s:b:hp" opt; do
     case $opt in
@@ -479,7 +480,8 @@ else
             deploymentName="$deployment_name" \
             aadClientId="$mona_aad_app_id" \
             aadClientSecret="$mona_aad_app_secret" \
-            aadTenantId="$current_user_tid"
+            aadTenantId="$current_user_tid" \
+            pcApiBaseUrl="$pc_api_base_url"
 
     [[ $? -eq 0 ]] && echo "$lp ✔   Integration pack [$integration_pack ($pack_path)] deployed.";
     [[ $? -ne 0 ]] && echo "$lp ⚠️   Integration pack [$integration_pack ($pack_path)] deployment failed."
