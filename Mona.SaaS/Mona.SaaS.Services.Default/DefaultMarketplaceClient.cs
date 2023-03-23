@@ -31,9 +31,11 @@ namespace Mona.SaaS.Services.Default
         private readonly ILogger logger;
         private readonly IdentityConfiguration identityConfig;
 
+        private readonly Uri pcApiBaseUrl;
+
         static DefaultMarketplaceClient()
         {
-            httpClient = new HttpClient { BaseAddress = new Uri("https://marketplaceapi.microsoft.com") };
+            httpClient = new HttpClient();
 
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -41,10 +43,15 @@ namespace Mona.SaaS.Services.Default
 
         public DefaultMarketplaceClient(
             ILogger<DefaultMarketplaceClient> logger,
-            IOptionsSnapshot<IdentityConfiguration> identityConfig)
+            IOptionsSnapshot<IdentityConfiguration> identityConfig, 
+            IOptionsSnapshot<PublisherConfiguration> publisherConfig)
         {
             this.logger = logger;
             this.identityConfig = identityConfig.Value;
+            
+            pcApiBaseUrl = new Uri(string.IsNullOrEmpty(publisherConfig.Value.PartnerCenterApiBaseUrl)
+                ? "https://marketplaceapi.microsoft.com"
+                : publisherConfig.Value.PartnerCenterApiBaseUrl);
         }
 
         public async Task<bool> IsHealthyAsync()
@@ -56,7 +63,7 @@ namespace Mona.SaaS.Services.Default
 
                 var pollyResult = await retryPolicy.ExecuteAndCaptureAsync(async () =>
                 {
-                    using (var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl))
+                    using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri(pcApiBaseUrl, relativeUrl)))
                     {
                         return await httpClient.SendAsync(request);
                     }
@@ -99,7 +106,7 @@ namespace Mona.SaaS.Services.Default
 
                 var pollyResult = await retryPolicy.ExecuteAndCaptureAsync(async () =>
                 {
-                    using (var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl))
+                    using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri(pcApiBaseUrl, relativeUrl)))
                     {
                         var bearerToken = await GetMarketplaceApiBearerToken();
 
@@ -143,7 +150,7 @@ namespace Mona.SaaS.Services.Default
 
                 var pollyResult = await retryPolicy.ExecuteAndCaptureAsync(async () =>
                 {
-                    using (var request = new HttpRequestMessage(HttpMethod.Get, relativeUrl))
+                    using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri(pcApiBaseUrl, relativeUrl)))
                     {
                         var bearerToken = await GetMarketplaceApiBearerToken();
 
@@ -185,7 +192,7 @@ namespace Mona.SaaS.Services.Default
 
                 var pollyResult = await retryPolicy.ExecuteAndCaptureAsync(async () =>
                 {
-                    using (var request = new HttpRequestMessage(HttpMethod.Post, relativeUrl))
+                    using (var request = new HttpRequestMessage(HttpMethod.Post, new Uri(pcApiBaseUrl, relativeUrl)))
                     {
                         var bearerToken = await GetMarketplaceApiBearerToken();
 

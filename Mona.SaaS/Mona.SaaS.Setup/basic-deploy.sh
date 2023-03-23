@@ -7,7 +7,7 @@ mona_version=$(cat ../../VERSION)
 
 exec 3>&2 # Grabbing a reliable stderr handle...
 
-usage() { printf "\nUsage: $0 <-n deployment-name> <-r deployment-region> [-i integration-pack] [-a app-service-plan-id] [-d display-name] [-g resource-group] [-l ui-language] [-s subscription-id] [-e event-version] [-h] [-p]\n"; }
+usage() { printf "\nUsage: $0 <-n deployment-name> <-r deployment-region> [-i integration-pack] [-a app-service-plan-id] [-d display-name] [-g resource-group] [-l ui-language] [-s subscription-id] [-e event-version] [-b partner_center_api_base_url] [-h] [-p]\n"; }
 
 check_az() {
     exec 3>&2
@@ -164,7 +164,7 @@ event_version="2021-10-01" # Default event version is always the latest one. Can
 language="en" # Default UI language is English ("en"). Can be overridden using [-l] flag below.
 integration_pack="default"
 
-while getopts "a:d:g:l:n:r:s:hp" opt; do
+while getopts "a:d:g:l:n:r:s:b:hp" opt; do
     case $opt in
         a)
             app_service_plan_id=$OPTARG
@@ -192,6 +192,9 @@ while getopts "a:d:g:l:n:r:s:hp" opt; do
         ;;
         i)
             integration_pack=$OPTARG
+        ;;
+        b)
+            pc_api_base_url=$OPTARG
         ;;
         h)
             no_splash=1
@@ -437,7 +440,8 @@ az deployment group create \
         aadClientSecret="$mona_aad_app_secret" \
         language="$language" \
         appServicePlanId="$app_service_plan_id" \
-        eventVersion="$event_version"
+        eventVersion="$event_version" \
+        pcApiBaseUrl="$pc_api_base_url"
 
 [[ $? -eq 0 ]] && echo "$lp ✔   Mona resources successfully deployed [$az_deployment_name] to resource group [$resource_group_name].";
 [[ $? -ne 0 ]] && echo "$lp ❌   Mona resource group [$resource_group_name] deployment [$az_deployment_name] has failed. Aborting setup..." && exit 1;

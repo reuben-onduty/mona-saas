@@ -18,6 +18,9 @@ param aadClientSecret string
 @description('If provided, specifies the ID of an existing app service plan that the Mona web app should be deployed to.')
 param appServicePlanId string = ''
 
+@description('If provided, the base URL to use when calling the Partner Center API (useful for emulators).')
+param pcApiBaseUrl string = 'https://marketplaceapi.microsoft.com'
+
 @description('The version of events that this Mona deployment will publish to Event Grid.')
 @allowed([
   '2021-05-01'
@@ -237,6 +240,7 @@ resource webAppName_appsettings 'Microsoft.Web/sites/config@2020-12-01' = {
     'Deployment:EventVersion': eventVersion
     'Deployment:IsTestModeEnabled': 'true'
     'Deployment:MonaVersion': monaVersion
+    'Deployment:PartnerCenterApiBaseUrl': pcApiBaseUrl
     'Deployment:Name': cleanDeploymentName
     'Identity:AdminIdentity:AadTenantId': aadTenantId
     'Identity:AdminIdentity:RoleName': 'monaadmins'

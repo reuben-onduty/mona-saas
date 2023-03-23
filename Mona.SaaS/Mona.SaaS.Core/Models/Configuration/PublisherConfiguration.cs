@@ -14,6 +14,12 @@ namespace Mona.SaaS.Core.Models.Configuration
         public bool IsSetupComplete { get; set; }
 
         /// <summary>
+        /// Gets/sets the Partner Center API base URL; useful in emulator scenarios.
+        /// </summary>
+        [Display(Name = "Partner Center API base URL")]
+        public string PartnerCenterApiBaseUrl { get; set; }
+
+        /// <summary>
         /// Gets/sets the publisher's friendly/display name.
         /// </summary>
         [Required, Display(Name = "Publisher name")]
