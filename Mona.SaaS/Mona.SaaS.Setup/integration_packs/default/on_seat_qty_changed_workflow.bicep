@@ -17,6 +17,8 @@ param pcApiBaseUrl string = 'https://marketplaceapi.microsoft.com'
 param eventGridConnectionName string = 'mona-events-connection-${deploymentName}'
 param eventGridTopicName string = 'mona-events-${deploymentName}'
 
+var cleanPcApiBaseUrl = endsWith(pcApiBaseUrl, '/') ? substring(pcApiBaseUrl, 0, length(pcApiBaseUrl) - 1) : pcApiBaseUrl 
+
 var name = 'mona-on-subscription-seat-qty-changed-${deploymentName}'
 var displayName = 'On subscription seat quantity changed'
 var description = 'This workflow is automatically triggered after Mona has been notified by the AppSource/Marketplace that a subscription seat quantity has been changed.'
@@ -227,7 +229,7 @@ resource workflow 'Microsoft.Logic/workflows@2019-05-01' = {
                   'content-type': 'application/json'
                 }
                 method: 'PATCH'
-                uri: uri(pcApiBaseUrl, 'api/saas/subscriptions/@{body(\'${actionNames.parseSubscriptionInfo}\')?[\'Subscription ID\']}/operations/@{body(\'${actionNames.parseEventInfo}\')?[\'Operation ID\']}?api-version=2018-08-31')
+                uri: '${cleanPcApiBaseUrl}/api/saas/subscriptions/@{body(\'${actionNames.parseSubscriptionInfo}\')?[\'Subscription ID\']}/operations/@{body(\'${actionNames.parseEventInfo}\')?[\'Operation ID\']}?api-version=2018-08-31'
               }
               runAfter: {}
               type: 'Http'
